@@ -21,7 +21,7 @@ export const saveUsers = (users: User[]): void => {
 export const saveUsersDB = async (users: User): Promise<void> => {
   try {
     //post req to server
-    const res = await axios.post("http://127.0.0.1:3306/users", users);
+    const res = await axios.post("https://nrbb.jansuraaj.org/users", users);
     //incase of success
     if (res.status === 201) {
       toast.success("Registration successfully saved");
