@@ -42,16 +42,17 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess, referred
     try {
       setIsSubmitting(true);
 
-      // Check if email already exists
+      //if email is not provided set this to default
       if (data.email == '' || data.email == null) {
         data.email = 'email@notprovided.yet'
       }
-      const existingUser = getUserByEmail(data.email);
-      if (existingUser) {
-        toast.error('This email is already registered');
-        setIsSubmitting(false);
-        return;
-      }
+      // Check if email already exists
+      // const existingUser = getUserByEmail(data.email);
+      // if (existingUser) {
+      //   toast.error('This email is already registered');
+      //   setIsSubmitting(false);
+      //   return;
+      // }
       const encryptedId = encryptMobileNumber(data.phoneNumber);
       const profileURL = 'http://nrb.jansuraaj.org/members/' + encryptedId;
       // Create new user
@@ -73,7 +74,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess, referred
       onSuccess(newUser);
 
       if (!referredBy) {
-        toast.success('Registration successful!');
+        // toast.success('Registration successful!');
       }
     } catch (error) {
       console.error('Registration error:', error);
@@ -169,8 +170,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess, referred
           {lang == 'en' ? 'Currently residing in which State? *' : 'वर्तमान में किस राज्य में रह रहे हैं? *'}
         </label>
         <select
-          id="district"
-          className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm ${errors.biharDistrict ? 'border-red-500' : 'border'
+          id="state"
+          className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm ${errors.currentState ? 'border-red-500' : 'border'
             }`}
           {...register('currentState', lang == 'en' ? { required: 'Please select a state' } : { required: 'कृपया एक राज्य चुनें' })}
         >
@@ -186,8 +187,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess, referred
           ))
           }
         </select>
-        {errors.biharDistrict && (
-          <p className="mt-1 text-sm text-red-600">{errors.biharDistrict.message}</p>
+        {errors.currentState && (
+          <p className="mt-1 text-sm text-red-600">{errors.currentState.message}</p>
         )}
       </div>
       <div>
@@ -198,7 +199,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess, referred
           id="district"
           className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm ${errors.biharDistrict ? 'border-red-500' : 'border'
             }`}
-          {...register('biharDistrict', lang == 'en' ? { required: 'Please select a district' } : { required: 'कृपया एक जिला चुनें' })}
+          {...register('biharDistrict', lang == 'en' ? { required: 'Please select a district' } : { required: 'कृपया एक ज़िला चुनें' })}
         >
           <option value="">{lang == 'en' ? 'Select District' : 'ज़िला चुनें'}</option>
           {lang == 'en' ? biharDistrictsEn.map((district) => (
