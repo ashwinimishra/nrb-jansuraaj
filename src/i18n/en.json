@@ -1,0 +1,8 @@
+{
+    "registration": {
+        "fullName": "Full Name*",
+        "email": "Email",
+        "submit": "Submit",
+        "language": "Switch Language"
+    }
+}

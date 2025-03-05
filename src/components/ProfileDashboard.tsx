@@ -180,7 +180,7 @@ const ProfileDashboard: React.FC<ProfileDashboardProps> = ({ user }) => {
       {/* Referrals List */}
       <div className="px-6 pb-6">
         <h3 className="text-lg font-medium text-gray-800 mb-4">Your Referrals</h3>
-        <ReferralForm userId={user.id} />
+
         {referrals.length === 0 ? (
           <div className="text-center py-8 bg-gray-50 rounded-lg">
             <Users className="h-12 w-12 text-gray-400 mx-auto mb-3" />
@@ -284,8 +284,8 @@ const ProfileDashboard: React.FC<ProfileDashboardProps> = ({ user }) => {
                           key={index}
                           onClick={() => setCurrentPage(index + 1)}
                           className={`relative inline-flex items-center px-4 py-2 border ${currentPage === index + 1
-                              ? 'bg-indigo-50 border-indigo-500 text-indigo-600'
-                              : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'
+                            ? 'bg-indigo-50 border-indigo-500 text-indigo-600'
+                            : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'
                             } text-sm font-medium`}
                         >
                           {index + 1}
@@ -307,6 +307,7 @@ const ProfileDashboard: React.FC<ProfileDashboardProps> = ({ user }) => {
             )}
           </>
         )}
+        <ReferralForm userId={user.id} />
       </div>
 
       {/* Rewards Information */}

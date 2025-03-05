@@ -2,6 +2,7 @@ import React from 'react';
 import { User } from '../types';
 import { CheckCircle, Copy, Share2, User as UserIcon } from 'lucide-react';
 import { toast } from 'react-toastify';
+import prashantImage from '../assets/Prashant.jpg';
 
 interface SuccessMessageProps {
   user: User;
@@ -24,7 +25,10 @@ const SuccessMessage: React.FC<SuccessMessageProps> = ({ user, onReferFriend, on
       <h2 className="text-2xl font-bold text-green-800 mb-2">Congratulations!</h2>
 
       <p className="text-green-700 mb-4">
-        You are now a registered member working for the betterment of Bihar.
+        You are now a registered member working for the betterment of Bihar. As a first step we request you to add more members to this movement using refer a friend button.
+      </p>
+      <p className="text-green-700 mb-4">
+        अपने साथियों को भी बिहार की बेहतरी की इस मुहीम में जोड़ने के लिए नीचे दिए गए बटन को क्लिक करें|
       </p>
 
       {/* <div className="bg-white border border-green-200 rounded-md p-3 mb-6">
@@ -33,7 +37,7 @@ const SuccessMessage: React.FC<SuccessMessageProps> = ({ user, onReferFriend, on
           <p className="font-medium text-gray-800">{user.profileUrl}</p>
           <button
             onClick={copyProfileUrl}
-            className="text-indigo-600 hover:text-indigo-800"
+            className="text-yellow-600 hover:text-yellow-800"
             title="Copy to clipboard"
           >
             <Copy className="h-4 w-4" />
@@ -44,19 +48,22 @@ const SuccessMessage: React.FC<SuccessMessageProps> = ({ user, onReferFriend, on
       <div className="flex flex-col sm:flex-row justify-center gap-3">
         <button
           onClick={onReferFriend}
-          className="flex items-center justify-center py-2 px-6 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          className="flex items-center justify-center py-2 px-6 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
         >
           <Share2 className="h-5 w-5 mr-2" />
           Refer a Friend
         </button>
 
-        <button
+        {/* <button
           onClick={onViewDashboard}
-          className="flex items-center justify-center py-2 px-6 border border-indigo-300 rounded-md shadow-sm text-sm font-medium text-indigo-700 bg-white hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          className="flex items-center justify-center py-2 px-6 border border-yellow-300 rounded-md shadow-sm text-sm font-medium text-yellow-700 bg-white hover:bg-yellow-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
         >
           <UserIcon className="h-5 w-5 mr-2" />
           View Dashboard
-        </button>
+        </button> */}
+      </div>
+      <div className="flex flex-col sm:flex-row justify-center gap-3 p-6">
+        <img src={prashantImage} alt="Jan Suraaj" className="h-80 w-80" />
       </div>
     </div>
   );
