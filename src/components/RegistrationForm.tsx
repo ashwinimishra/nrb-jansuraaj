@@ -85,9 +85,19 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess, referred
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 bg-white p-6 rounded-lg shadow-md">
-      <button className='bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-semibold py-2 px-4 rounded' value={lang} onClick={handleOnclick}>
+      <button className='bg-gradient-to-r from-yellow-500 to-yellow-700 text-white font-semibold py-2 px-4 rounded' value={lang} onClick={handleOnclick}>
         {lang === 'en' ? 'हिंदी' : 'English'}
       </button>
+      <div className="bg-yellow border border-yellow-200 rounded-md p-3 mb-6">
+        {lang == 'en' ? <h1 className="bg-yellow text-bold">
+          <b>"Bihari"</b> as a term is used against all Non Resident Biharis in a manner of shame.
+          Change starts with us! Let's connect ourselves, our friends and family to strengthen the fight for change.
+        </h1>
+          : <h1>
+            <b>"बिहारी"</b> शब्द का प्रयोग बिहार से बाहर रह रहे बिहारियों के खिलाफ अपमानजनक तरीके से किया जाता है।
+            बदलाव हमसे शुरू होता है! आइए परिवर्तन की लड़ाई को मजबूत करने के लिए स्वयं, अपने दोस्तों और परिवार के सदस्यों को इस मुहीम से जोड़ें।
+          </h1>}
+      </div>
       <div>
         <label htmlFor="fullName" className="block text-sm font-medium text-gray-700">
           {lang == 'en' ? 'Full Name *' : 'पूरा नाम *'}
@@ -164,7 +174,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess, referred
             }`}
           {...register('currentState', lang == 'en' ? { required: 'Please select a state' } : { required: 'कृपया एक राज्य चुनें' })}
         >
-          <option value="">Select State</option>
+          <option value="">{lang == 'en' ? 'Select State' : 'राज्य चुनें'}</option>
           {indiaStates.map((state) => (
             <option key={state} value={state}>
               {state}
@@ -185,7 +195,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess, referred
             }`}
           {...register('biharDistrict', lang == 'en' ? { required: 'Please select a district' } : { required: 'कृपया एक जिला चुनें' })}
         >
-          <option value="">Select District</option>
+          <option value="">{lang == 'en' ? 'Select District' : 'ज़िला चुनें'}</option>
           {biharDistricts.map((district) => (
             <option key={district} value={district}>
               {district}
@@ -202,7 +212,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess, referred
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 disabled:bg-yellow-400"
+            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-yellow-500 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 disabled:bg-yellow-400"
           >
             {isSubmitting ? (
               <>

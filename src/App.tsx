@@ -7,7 +7,7 @@ import SuccessMessage from './components/SuccessMessage';
 import ReferralForm from './components/ReferralForm';
 import ProfileDashboard from './components/ProfileDashboard';
 import { Users } from 'lucide-react';
-import logoImage from './assets/logo.png';
+import logoImage from './assets/logo.jpeg';
 
 function App() {
   const [registeredUser, setRegisteredUser] = useState<User | null>(null);
@@ -34,20 +34,20 @@ function App() {
 
 
 
-      <header className="relative flex items-center justify-center bg-gradient-to-r from-yellow-500 to-orange-500 py-4 px-4">
+      <header className="bg-gradient-to-r from-yellow-300 to-yellow-700 py-4 px-4 flex items-center justify-center space-x-4">
         {/* Logo Section */}
-        <div className="absolute left-4 top-1/2 -translate-y-1/2">
-          <img
-            src={logoImage}
-            alt="Jai Surat Logo"
-            className="w-24 h-24 rounded-full"
-          /></div>
-        <div className="text-center">
-          <div className="text-lg md:text-2xl font-bold text-white">
-            {/* <Users className="h-8 w-8 mr-3" /> */}
-            <h1 className="text-2xl font-bold">NRB Registration Portal</h1>
-            <p className="text-md font-light">Non Resident Biharis</p>
-          </div>
+        <div className="flex-shrink-0">
+          <div className="w-16 h-16 rounded-full overflow-hidden">
+            <a href='https://jansuraaj.org'>
+              <img
+                src={logoImage}
+                alt="Jan Suraaj Logo"
+                className="w-full h-full object-cover"
+              /></a></div></div>
+        <div className="flex flex-col">
+          {/* <Users className="h-8 w-8 mr-3" /> */}
+          <h1 className="text-lg md:text-2xl font-bold text-white">NRB Registration Portal</h1>
+          <p className="text-sm md:text-base text-white">Non Resident Bihari</p>
         </div>
 
         {/* Desktop Navigation */}
@@ -152,7 +152,7 @@ function App() {
       <footer className="bg-gray-800 text-white py-6 mt-12">
         <div className="container mx-auto px-4 text-center">
           <p>&copy; {new Date().getFullYear()} Jan Suraaj. All rights reserved.</p>
-          <p className="text-gray-400 text-sm mt-1">Working for a better Bihar</p>
+          <p className="text-gray-400 text-sm mt-1">Jan Suraaj for New Bihar</p>
         </div>
       </footer>
     </div>
