@@ -2,7 +2,7 @@ import React from 'react';
 import { User } from '../types';
 import { CheckCircle, Copy, Share2, User as UserIcon } from 'lucide-react';
 import { toast } from 'react-toastify';
-import prashantImage from '../assets/Prashant.jpg';
+import prashantImage from '../assets/Prashant.jpeg';
 
 interface SuccessMessageProps {
   user: User;

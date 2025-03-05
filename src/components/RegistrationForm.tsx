@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { User } from '../types';
-import { biharDistricts } from '../data/districts';
+import { biharDistrictsEn, biharDistrictsHi } from '../data/districts';
 import { createUser, getUserByEmail } from '../utils/storage';
 import { Loader2 } from 'lucide-react';
 import { encryptMobileNumber } from '../utils/encryption';
-import { indiaStates } from '../data/states';
+import { indiaStatesEn, indiaStatesHi } from '../data/states';
 
 interface RegistrationFormProps {
   onSuccess: (user: User) => void;
@@ -175,11 +175,16 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess, referred
           {...register('currentState', lang == 'en' ? { required: 'Please select a state' } : { required: 'कृपया एक राज्य चुनें' })}
         >
           <option value="">{lang == 'en' ? 'Select State' : 'राज्य चुनें'}</option>
-          {indiaStates.map((state) => (
+          {lang == 'en' ? indiaStatesEn.map((state) => (
             <option key={state} value={state}>
               {state}
             </option>
-          ))}
+          )) : indiaStatesHi.map((state) => (
+            <option key={state} value={state}>
+              {state}
+            </option>
+          ))
+          }
         </select>
         {errors.biharDistrict && (
           <p className="mt-1 text-sm text-red-600">{errors.biharDistrict.message}</p>
@@ -196,11 +201,17 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess, referred
           {...register('biharDistrict', lang == 'en' ? { required: 'Please select a district' } : { required: 'कृपया एक जिला चुनें' })}
         >
           <option value="">{lang == 'en' ? 'Select District' : 'ज़िला चुनें'}</option>
-          {biharDistricts.map((district) => (
+          {lang == 'en' ? biharDistrictsEn.map((district) => (
             <option key={district} value={district}>
               {district}
             </option>
-          ))}
+          )) :
+            biharDistrictsHi.map((district) => (
+              <option key={district} value={district}>
+                {district}
+              </option>
+            ))
+          }
         </select>
         {errors.biharDistrict && (
           <p className="mt-1 text-sm text-red-600">{errors.biharDistrict.message}</p>
