@@ -12,6 +12,7 @@ interface RegistrationFormProps {
   onSuccess: (user: User) => void;
   referredBy?: string;
   changeLanguage: (lang: string) => void;
+  currentlang: string;
 }
 
 interface FormData {
@@ -24,9 +25,10 @@ interface FormData {
   countryCode: string; isRegistered: string; isMember: string; currentCountry: string; currentState: string;
 }
 
-const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess, referredBy, changeLanguage }) => {
+const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess, referredBy, changeLanguage, currentlang }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [lang, setLanguage] = useState('en');
+  const [lang, setLanguage] = useState(currentlang);
+  console.log(lang);
   const {
     register,
     handleSubmit,
@@ -39,7 +41,6 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess, referred
     // setLanguage(lang === 'en' ? 'hi' : 'en');
     // But the 1st is more robust when the event happens more frequently.
     changeLanguage(lang);
-    console.log(lang);
   };
   const onSubmit = async (data: FormData) => {
     try {
@@ -89,10 +90,10 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess, referred
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 bg-white p-6 rounded-lg shadow-md">
-      <button className='bg-gradient-to-r from-yellow-500 to-yellow-700 text-white font-semibold py-2 px-4 rounded' value={lang} onClick={handleOnclick}>
+      {!referredBy ? <button className='bg-gradient-to-r from-yellow-500 to-yellow-700 text-white font-semibold py-2 px-4 rounded' value={lang} onClick={handleOnclick}>
         {lang === 'en' ? 'हिंदी' : 'English'}
-      </button>
-      <div className="bg-yellow border border-yellow-200 rounded-md p-3 mb-6">
+      </button> : <p>{lang === 'en' ? 'Adding more members from your village/block will help us create a network which can then be aided financially through Jan Suraj schemes' : 'आपके गांव/ब्लॉक से अधिक सदस्यों को जोड़ने से हमें एक नेटवर्क बनाने में मदद मिलेगी, जिससे जन सुराज योजनाओं के माध्यम से वित्तीय सहायता दी जा सकती है।'}</p>}
+      {!referredBy ? <div className="bg-yellow border border-yellow-200 rounded-md p-3 mb-6">
         {lang == 'en' ? <h1 className="bg-yellow text-bold">
           <b>"Bihari"</b> as a term is used against all Non Resident Biharis in a manner of shame.
           Change starts with us! Let's connect ourselves, our friends and family to strengthen the fight for change.
@@ -101,7 +102,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess, referred
             <b>"बिहारी"</b> शब्द का प्रयोग बिहार से बाहर रह रहे बिहारियों के खिलाफ अपमानजनक तरीके से किया जाता है।
             बदलाव हमसे शुरू होता है! आइए परिवर्तन की लड़ाई को मजबूत करने के लिए स्वयं, अपने दोस्तों और परिवार के सदस्यों को इस मुहीम से जोड़ें।
           </h1>}
-      </div>
+      </div> : <div />}
       <div>
         <label htmlFor="fullName" className="block text-sm font-medium text-gray-700">
           {lang == 'en' ? 'Full Name *' : 'पूरा नाम *'}

@@ -25,7 +25,7 @@ function App() {
   const handleReferFriend = () => {
     setShowReferralForm(true);
     setShowDashboard(false);
-    setLanguage(lang);
+    // setLanguage(lang);
   };
 
   const handleViewDashboard = () => {
@@ -120,7 +120,8 @@ function App() {
               </div> */}
 
               <div className="p-6">
-                <RegistrationForm onSuccess={handleRegistrationSuccess} changeLanguage={handleLanguageChange} />
+                <RegistrationForm onSuccess={handleRegistrationSuccess} changeLanguage={handleLanguageChange}
+                  currentlang={lang} />
               </div>
             </div>
           ) : (
@@ -134,7 +135,7 @@ function App() {
                 />
               )}
 
-              {showReferralForm && <ReferralForm userId={registeredUser.id} />}
+              {showReferralForm && <ReferralForm userId={registeredUser.id} lang={lang} />}
 
               {showDashboard && <ProfileDashboard user={registeredUser} />}
 
@@ -147,7 +148,7 @@ function App() {
                     }}
                     className="text-indigo-600 hover:text-indigo-800 font-medium"
                   >
-                    ← Back to Success Page
+                    {lang == 'en' ? '← Back to Previous Page' : '← वापस जाएँ'}
                   </button>
                 </div>
               )}
