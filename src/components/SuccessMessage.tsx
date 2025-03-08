@@ -1,35 +1,66 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { User } from '../types';
-import { CheckCircle, Copy, Share2, User as UserIcon } from 'lucide-react';
+import { CheckCircle, Copy, Share2, User as UserIcon, Facebook } from 'lucide-react';
 import { toast } from 'react-toastify';
 import prashantImage from '../assets/Prashant.jpeg';
+import ShareFBPost from './ShareFBPost';
 
 interface SuccessMessageProps {
   user: User;
   onReferFriend: () => void;
   onViewDashboard: () => void;
+  lang: String;
 }
 
-const SuccessMessage: React.FC<SuccessMessageProps> = ({ user, onReferFriend, onViewDashboard }) => {
+const SuccessMessage: React.FC<SuccessMessageProps> = ({ user, onReferFriend, onViewDashboard, lang }) => {
   const copyProfileUrl = () => {
     navigator.clipboard.writeText(user.profileUrl);
     toast.success('Profile URL copied to clipboard!');
   };
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const fbUrl = 'https://nrb.jansuraaj.org';
+  // Function to open a responsive window
+  const openResponsiveFBWindow = () => {
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
 
+    // Calculate new window dimensions based on the screen size
+    let width = 600;
+    let height = 400;
+
+    // Adjust window size for small screens (like mobile devices)
+    if (screenWidth < 768) {
+      width = screenWidth - 50;  // Allow for margins/padding
+      height = screenHeight - 150;
+    }
+    const facebookShareURL = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+      fbUrl
+    )}`;
+    // Open the new window with responsive size
+    window.open(
+      facebookShareURL, // URL to open
+      '_blank', // Open in a new tab or window
+      `width=${width},height=${height},resizable=yes,scrollbars=yes`
+    );
+  };
   return (
     <div className="bg-green-50 border border-green-200 rounded-lg p-6 text-center">
       <div className="flex justify-center mb-4">
         <CheckCircle className="h-12 w-12 text-green-500" />
       </div>
+      {lang == 'en' ? (
+        <div>
 
-      <h2 className="text-2xl font-bold text-green-800 mb-2">Congratulations!</h2>
+          {/* <h2 className="text-2xl font-bold text-green-800 mb-2">Congratulations!</h2> */}
 
-      <p className="text-green-700 mb-4">
-        You are now a registered member working for the betterment of Bihar. As a first step we request you to add more members to this movement using refer a friend button.
-      </p>
-      <p className="text-green-700 mb-4">
-        अपने साथियों को भी बिहार की बेहतरी की इस मुहीम में जोड़ने के लिए नीचे दिए गए बटन को क्लिक करें|
-      </p>
+          <p className="text-green-700 mb-4">
+            You are now a registered member working for the betterment of Bihar. As a first step we request you to take responsibility of your village and share with us contacts of people from your village who can benefit from Jan Suraj's schemes.
+          </p>
+        </div>) : (
+        <p className="text-green-700 mb-4">
+          अब आप बिहार की बेहतरी के लिए काम करने वाले पंजीकृत सदस्य हैं।
+          पहले कदम के रूप में हम आपसे अनुरोध करते हैं कि आप अपने गांव की जिम्मेदारी लें और अपने गांव के उन लोगों के संपर्क हमारे साथ साझा करें जो जन सुराज की योजनाओं से लाभान्वित हो सकते हैं|
+        </p>)}
 
       {/* <div className="bg-white border border-green-200 rounded-md p-3 mb-6">
         <p className="text-sm text-gray-500 mb-1">Your profile URL is:</p>
@@ -51,9 +82,15 @@ const SuccessMessage: React.FC<SuccessMessageProps> = ({ user, onReferFriend, on
           className="flex items-center justify-center py-2 px-6 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
         >
           <Share2 className="h-5 w-5 mr-2" />
-          Refer a Friend
+          {lang == 'en' ? 'Add people to benefit' : 'लाभ लेने के लिए लोग जोड़ें'}
         </button>
-
+        <button
+          onClick={() => window.open('https://www.jansuraaj.org/membership-registration')}
+          className="flex items-center justify-center py-2 px-6 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
+        >
+          <UserIcon className="h-5 w-5 mr-2" />
+          {lang == 'en' ? 'Download membership' : 'सदस्यता कार्ड प्राप्त करें'}
+        </button>
         {/* <button
           onClick={onViewDashboard}
           className="flex items-center justify-center py-2 px-6 border border-yellow-300 rounded-md shadow-sm text-sm font-medium text-yellow-700 bg-white hover:bg-yellow-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
@@ -61,7 +98,18 @@ const SuccessMessage: React.FC<SuccessMessageProps> = ({ user, onReferFriend, on
           <UserIcon className="h-5 w-5 mr-2" />
           View Dashboard
         </button> */}
+        <button
+          onClick={openResponsiveFBWindow}
+          className="flex items-center justify-center py-2 px-6 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
+        >
+          <Facebook className="h-5 w-5 mr-2" />
+          {lang == 'en' ? 'Post on Facebook and earn' : 'फेसबुक पर पोस्ट करें और कमाएं'}
+        </button>
       </div>
+      {/* <ShareFBPost isOpen={isPopupOpen}
+        onClose={() => setIsPopupOpen(false)}
+        url="https://nrb.jansuraaj.org"
+        title={lang == 'en' ? "Connect with Prashant Kishore's team to improve Bihar" : 'प्रशांत किशोर की टीम से जुड़ें'} /> */}
       <div className="flex flex-col sm:flex-row justify-center gap-3 p-6">
         <img src={prashantImage} alt="Jan Suraaj" className="h-80 w-80" />
       </div>

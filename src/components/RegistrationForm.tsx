@@ -11,6 +11,7 @@ import { indiaStatesEn, indiaStatesHi } from '../data/states';
 interface RegistrationFormProps {
   onSuccess: (user: User) => void;
   referredBy?: string;
+  changeLanguage: (lang: string) => void;
 }
 
 interface FormData {
@@ -23,7 +24,7 @@ interface FormData {
   countryCode: string; isRegistered: string; isMember: string; currentCountry: string; currentState: string;
 }
 
-const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess, referredBy }) => {
+const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess, referredBy, changeLanguage }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [lang, setLanguage] = useState('en');
   const {
@@ -33,10 +34,12 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess, referred
     reset
   } = useForm<FormData>();
   const handleOnclick = () => {
-    setLanguage(prevState => (prevState === 'en' ? 'hi' : 'en'));
+    setLanguage(prevState => (prevState == 'en' ? 'hi' : 'en'));
     // it can also be written like this
-    // setLanguage(language === 'en' ? 'da' : 'en');
+    // setLanguage(lang === 'en' ? 'hi' : 'en');
     // But the 1st is more robust when the event happens more frequently.
+    changeLanguage(lang);
+    console.log(lang);
   };
   const onSubmit = async (data: FormData) => {
     try {
@@ -66,13 +69,13 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess, referred
         data.createdAt, data.status, data.points,
         data.countryCode, data.isRegistered, data.isMember, data.currentCountry, data.currentState
       );
-      console.log(newUser);
+      // console.log(newUser);
       // Reset form
       reset();
 
       // Notify parent component of success
       onSuccess(newUser);
-
+      changeLanguage(lang);
       if (!referredBy) {
         // toast.success('Registration successful!');
       }
@@ -165,32 +168,33 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess, referred
           <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
         )}
       </div>
-      <div>
-        <label htmlFor="state" className="block text-sm font-medium text-gray-700">
-          {lang == 'en' ? 'Currently residing in which State? *' : 'वर्तमान में किस राज्य में रह रहे हैं? *'}
-        </label>
-        <select
-          id="state"
-          className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm ${errors.currentState ? 'border-red-500' : 'border'
-            }`}
-          {...register('currentState', lang == 'en' ? { required: 'Please select a state' } : { required: 'कृपया एक राज्य चुनें' })}
-        >
-          <option value="">{lang == 'en' ? 'Select State' : 'राज्य चुनें'}</option>
-          {lang == 'en' ? indiaStatesEn.map((state) => (
-            <option key={state} value={state}>
-              {state}
-            </option>
-          )) : indiaStatesHi.map((state) => (
-            <option key={state} value={state}>
-              {state}
-            </option>
-          ))
-          }
-        </select>
-        {errors.currentState && (
-          <p className="mt-1 text-sm text-red-600">{errors.currentState.message}</p>
-        )}
-      </div>
+      {!(referredBy) &&
+        <div>
+          <label htmlFor="state" className="block text-sm font-medium text-gray-700">
+            {lang == 'en' ? 'Currently residing in which State? *' : 'वर्तमान में किस राज्य में रह रहे हैं? *'}
+          </label>
+          <select
+            id="state"
+            className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm ${errors.currentState ? 'border-red-500' : 'border'
+              }`}
+            {...register('currentState', lang == 'en' ? { required: 'Please select a state' } : { required: 'कृपया एक राज्य चुनें' })}
+          >
+            <option value="">{lang == 'en' ? 'Select State' : 'राज्य चुनें'}</option>
+            {lang == 'en' ? indiaStatesEn.map((state) => (
+              <option key={state} value={state}>
+                {state}
+              </option>
+            )) : indiaStatesHi.map((state) => (
+              <option key={state} value={state}>
+                {state}
+              </option>
+            ))
+            }
+          </select>
+          {errors.currentState && (
+            <p className="mt-1 text-sm text-red-600">{errors.currentState.message}</p>
+          )}
+        </div>}
       <div>
         <label htmlFor="district" className="block text-sm font-medium text-gray-700">
           {lang == 'en' ? 'Which District in Bihar you belong to? *' : 'आप बिहार के किस जिले से हैं? *'}

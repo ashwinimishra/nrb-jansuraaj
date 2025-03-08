@@ -10,7 +10,7 @@ interface ReferralFormProps {
 const ReferralForm: React.FC<ReferralFormProps> = ({ userId }) => {
   const [referrals, setReferrals] = useState<User[]>([]);
   const [showNewReferralForm, setShowNewReferralForm] = useState(true);
-
+  const [lang, setLanguage] = useState('hi');
   const handleReferralSuccess = (newReferral: User) => {
     setReferrals([...referrals, newReferral]);
     setShowNewReferralForm(false);
@@ -19,15 +19,18 @@ const ReferralForm: React.FC<ReferralFormProps> = ({ userId }) => {
   const handleAddAnotherReferral = () => {
     setShowNewReferralForm(true);
   };
-
+  const handleLanguageChange = (newLang: string) => {
+    setLanguage(newLang);
+    console.log(newLang);
+  }
   return (
     <div className="mt-8 space-y-6">
       <div className="border-t border-gray-200 pt-6">
-        <h2 className="text-xl font-semibold text-gray-800 mb-4">Refer Your Friends</h2>
+        <h2 className="text-xl font-semibold text-gray-800 mb-4">{lang == 'hi' ? 'Refer Your Friends' : 'अपने साथियों को भी जोड़ें'}</h2>
 
         {referrals.length > 0 && (
           <div className="mb-6">
-            <h3 className="text-lg font-medium text-gray-700 mb-2">Your Referrals</h3>
+            <h3 className="text-lg font-medium text-gray-700 mb-2">{lang == 'hi' ? 'Your Referrals' : 'आपके रेफरल'}</h3>
             <div className="bg-gray-50 p-4 rounded-md">
               <ul className="divide-y divide-gray-200">
                 {referrals.map((referral, index) => (
@@ -45,7 +48,7 @@ const ReferralForm: React.FC<ReferralFormProps> = ({ userId }) => {
         {showNewReferralForm ? (
           <div className="bg-gray-50 p-4 rounded-md">
             <h3 className="text-lg font-medium text-gray-700 mb-4">Add a New Referral</h3>
-            <RegistrationForm onSuccess={handleReferralSuccess} referredBy={userId} />
+            <RegistrationForm onSuccess={handleReferralSuccess} referredBy={userId} changeLanguage={handleLanguageChange} />
           </div>
         ) : (
           <button

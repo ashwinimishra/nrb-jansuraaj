@@ -13,19 +13,25 @@ function App() {
   const [registeredUser, setRegisteredUser] = useState<User | null>(null);
   const [showReferralForm, setShowReferralForm] = useState(false);
   const [showDashboard, setShowDashboard] = useState(false);
+  const [lang, setLanguage] = useState('en');
 
   const handleRegistrationSuccess = (user: User) => {
     setRegisteredUser(user);
   };
 
+  const handleLanguageChange = (newLang: string) => {
+    setLanguage(newLang);
+  }
   const handleReferFriend = () => {
     setShowReferralForm(true);
     setShowDashboard(false);
+    setLanguage(lang);
   };
 
   const handleViewDashboard = () => {
     setShowDashboard(true);
     setShowReferralForm(false);
+    setLanguage(lang);
   };
 
   return (
@@ -114,7 +120,7 @@ function App() {
               </div> */}
 
               <div className="p-6">
-                <RegistrationForm onSuccess={handleRegistrationSuccess} />
+                <RegistrationForm onSuccess={handleRegistrationSuccess} changeLanguage={handleLanguageChange} />
               </div>
             </div>
           ) : (
@@ -124,6 +130,7 @@ function App() {
                   user={registeredUser}
                   onReferFriend={handleReferFriend}
                   onViewDashboard={handleViewDashboard}
+                  lang={lang}
                 />
               )}
 
