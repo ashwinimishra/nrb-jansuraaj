@@ -49,18 +49,23 @@ const SuccessMessage: React.FC<SuccessMessageProps> = ({ user, onReferFriend, on
         <CheckCircle className="h-12 w-12 text-green-500" />
       </div>
       {lang == 'en' ? (
+
         <div>
 
           {/* <h2 className="text-2xl font-bold text-green-800 mb-2">Congratulations!</h2> */}
-
+          <h1 className='text-green-700 mb-4' >Congratulations, you are now registered with Jan Suraaj.</h1>
           <p className="text-green-700 mb-4">
-            You are now a registered member working for the betterment of Bihar. As a first step we request you to take responsibility of your village and share with us contacts of people from your village who can benefit from Jan Suraj's schemes.
+            Bihar is detereorating and Biharis are forced to leave their family and friends behind to look for work. Bihar will change only when every Bihari is reconnected with their roots.
           </p>
+          <h1 className='text-green-700 mb-4 text-lg font-bold'>अब लीजिये बिहार की ज़िम्मेदारी और जोड़िये गाँव के पांच साथी </h1>
         </div>) : (
-        <p className="text-green-700 mb-4">
-          अब आप बिहार की बेहतरी के लिए काम करने वाले पंजीकृत सदस्य हैं।
-          पहले कदम के रूप में हम आपसे अनुरोध करते हैं कि आप अपने गांव की जिम्मेदारी लें और अपने गांव के उन लोगों के संपर्क हमारे साथ साझा करें जो जन सुराज की योजनाओं से लाभान्वित हो सकते हैं|
-        </p>)}
+        <div><h1 className='text-green-700 mb-4' >जन सुराज से जुड़ने के लिए धन्यवाद।</h1><p className="text-green-700 mb-4">
+          {/* अब आप बिहार की बेहतरी के लिए काम करने वाले पंजीकृत सदस्य हैं।
+    पहले कदम के रूप में हम आपसे अनुरोध करते हैं कि आप अपने गांव की जिम्मेदारी लें और अपने गांव के उन लोगों के संपर्क हमारे साथ साझा करें जो जन सुराज की योजनाओं से लाभान्वित हो सकते हैं| */}
+          बिहार बदहाल है और बिहारी काम के लिए दर दर भटकने को बेहाल है। जब हर बिहारी गाँव से जुड़कर काम करेगा तब ही बिहार बदलेगा।
+        </p>
+          <h1 className='text-green-700 mb-4 text-lg font-bold'>अब लीजिये बिहार की ज़िम्मेदारी और जोड़िये गाँव के पांच साथी </h1>
+        </div>)}
 
       {/* <div className="bg-white border border-green-200 rounded-md p-3 mb-6">
         <p className="text-sm text-gray-500 mb-1">Your profile URL is:</p>
@@ -82,14 +87,14 @@ const SuccessMessage: React.FC<SuccessMessageProps> = ({ user, onReferFriend, on
           className="flex items-center justify-center py-2 px-6 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
         >
           <Share2 className="h-5 w-5 mr-2" />
-          {lang == 'en' ? 'Add people to benefit' : 'लाभ लेने के लिए लोग जोड़ें'}
+          {lang == 'en' ? 'Add 5 people' : 'जोड़िये गाँव के पांच साथी'}
         </button>
         <button
           onClick={() => window.open('https://www.jansuraaj.org/membership-registration')}
           className="flex items-center justify-center py-2 px-6 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
         >
           <UserIcon className="h-5 w-5 mr-2" />
-          {lang == 'en' ? 'Download membership' : 'सदस्यता कार्ड प्राप्त करें'}
+          {lang == 'en' ? 'Download Jan Suraaj membership' : 'पार्टी सदस्यता कार्ड प्राप्त करें'}
         </button>
         {/* <button
           onClick={onViewDashboard}
@@ -103,7 +108,7 @@ const SuccessMessage: React.FC<SuccessMessageProps> = ({ user, onReferFriend, on
           className="flex items-center justify-center py-2 px-6 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
         >
           <Facebook className="h-5 w-5 mr-2" />
-          {lang == 'en' ? 'Post on Facebook and earn' : 'फेसबुक पर पोस्ट करें और कमाएं'}
+          {lang == 'en' ? 'Post on Facebook and help us' : 'फेसबुक पर पोस्ट करें और हमारा हौसला बढ़ाएं'}
         </button>
       </div>
       {/* <ShareFBPost isOpen={isPopupOpen}

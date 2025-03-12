@@ -50,10 +50,12 @@ function App() {
                 alt="Jan Suraaj Logo"
                 className="w-full h-full object-cover"
               /></a></div></div>
-        <div className="flex flex-col">
+        <div className="flex flex-col items-center text-center">
           {/* <Users className="h-8 w-8 mr-3" /> */}
-          <h1 className="text-lg md:text-2xl font-bold text-black">Jan Suraaj Party</h1>
-          <h2 className="text-sm md:text-base text-black">सही लोग | सही सोच | सामूहिक प्रयास</h2>
+          <h1 className="text-2xl md:text-2xl font-bold text-black mb-2">जन सुराज</h1>
+          <div className="w-full border-t-2 border-black"></div>
+          <p className="text-sm md:text-base text-black">सही लोग • सही सोच • सामूहिक प्रयास</p>
+          <div className="w-full border-t-2 border-black"></div>
         </div>
 
         {/* Desktop Navigation */}

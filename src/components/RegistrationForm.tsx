@@ -29,7 +29,7 @@ interface FormData {
 const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess, referredBy, changeLanguage, currentlang }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [lang, setLanguage] = useState(currentlang);
-  console.log(lang);
+  // console.log(lang);
   const {
     register,
     handleSubmit,
@@ -94,7 +94,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess, referred
       {!referredBy ? <button className='bg-gradient-to-r from-yellow-300 to-yellow-500 text-black font-semibold py-2 px-4 rounded' value={lang} onClick={handleOnclick}>
         {lang === 'en' ? 'हिंदी' : 'English'}
       </button> : <p>{lang === 'en' ? 'Adding more members from your village/block will help us create a network which can then be aided financially through Jan Suraj schemes' : 'आपके गांव/ब्लॉक से अधिक सदस्यों को जोड़ने से हमें एक नेटवर्क बनाने में मदद मिलेगी, जिससे जन सुराज योजनाओं के माध्यम से वित्तीय सहायता दी जा सकती है।'}</p>}
-      {!referredBy ? <div className="flex flex-col items-center justify-center"> {lang == 'en' ? <p className="text-lg md:text-2xl font-bold text-black">Registration Form</p> : <p className="text-lg md:text-2xl font-bold text-black">रजिस्ट्रेशन फॉर्म</p>}</div> : <div className="justify-center items-center">{lang == 'en' ? <p className="text-lg md:text-2xl font-bold text-black">Registration Form</p> : <p className="text-lg md:text-2xl font-bold text-black">रजिस्ट्रेशन फॉर्म</p>}</div>}
+      {!referredBy ? <div className="flex flex-col items-center justify-center"> {lang == 'en' ? <p className="text-lg md:text-2xl font-bold text-black">Registration Form</p> : <p className="text-lg md:text-2xl font-bold text-black">रजिस्ट्रेशन फॉर्म</p>}</div> : <p></p>}
       {!referredBy ? <div className="bg-yellow border border-yellow-200 rounded-md p-3 mb-6">
         {lang == 'en' ? <h1 className="bg-yellow text-bold">
           <b>"Bihari"</b> as a term is used against all Non Resident Biharis in a manner of shame.

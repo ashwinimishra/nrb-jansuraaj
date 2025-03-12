@@ -307,7 +307,7 @@ const ProfileDashboard: React.FC<ProfileDashboardProps> = ({ user }) => {
             )}
           </>
         )}
-        <ReferralForm userId={user.id} />
+        <ReferralForm userId={user.id} lang='en' />
       </div>
 
       {/* Rewards Information */}

@@ -24,12 +24,12 @@ export const saveUsersDB = async (users: User): Promise<void> => {
     const res = await axios.post("https://nrbb.jansuraaj.org/users", users);
     //incase of success
     if (res.status === 201) {
-      toast.success("Registration successfully saved");
+      // toast.success("Registration successfully saved");
     }
   } catch (error) {
     //incase of error
     console.error("Error Creating User: ", error);
-    toast.error("Error Creating User");
+    toast.error("मोबाइल नंबर पहले से पंजीकृत है (Mobile Number already registered) ");
   }
 };
 
