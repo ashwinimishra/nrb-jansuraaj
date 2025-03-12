@@ -13,7 +13,7 @@ function App() {
   const [registeredUser, setRegisteredUser] = useState<User | null>(null);
   const [showReferralForm, setShowReferralForm] = useState(false);
   const [showDashboard, setShowDashboard] = useState(false);
-  const [lang, setLanguage] = useState('en');
+  const [lang, setLanguage] = useState('hi');
 
   const handleRegistrationSuccess = (user: User) => {
     setRegisteredUser(user);
@@ -40,7 +40,7 @@ function App() {
 
 
 
-      <header className="bg-gradient-to-r from-yellow-300 to-yellow-700 py-4 px-4 flex items-center justify-center space-x-4">
+      <header className="bg-gradient-to-r from-yellow-300 to-yellow-500 py-4 px-4 flex items-center justify-center space-x-4">
         {/* Logo Section */}
         <div className="flex-shrink-0">
           <div className="w-16 h-16 rounded-full overflow-hidden">
@@ -52,8 +52,8 @@ function App() {
               /></a></div></div>
         <div className="flex flex-col">
           {/* <Users className="h-8 w-8 mr-3" /> */}
-          <h1 className="text-lg md:text-2xl font-bold text-white">NRB Registration Portal</h1>
-          <p className="text-sm md:text-base text-white">Non Resident Bihari</p>
+          <h1 className="text-lg md:text-2xl font-bold text-black">Jan Suraaj Party</h1>
+          <h2 className="text-sm md:text-base text-black">सही लोग | सही सोच | सामूहिक प्रयास</h2>
         </div>
 
         {/* Desktop Navigation */}

@@ -23,6 +23,7 @@ interface FormData {
   createdAt: string;
   status: string; points: string;
   countryCode: string; isRegistered: string; isMember: string; currentCountry: string; currentState: string;
+  pincode: number;
 }
 
 const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess, referredBy, changeLanguage, currentlang }) => {
@@ -68,7 +69,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess, referred
         // data.profileUrl, 
         profileURL,
         data.createdAt, data.status, data.points,
-        data.countryCode, data.isRegistered, data.isMember, data.currentCountry, data.currentState
+        data.countryCode, data.isRegistered, data.isMember, data.currentCountry, data.currentState, data.pincode,
       );
       // console.log(newUser);
       // Reset form
@@ -90,9 +91,10 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess, referred
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 bg-white p-6 rounded-lg shadow-md">
-      {!referredBy ? <button className='bg-gradient-to-r from-yellow-500 to-yellow-700 text-white font-semibold py-2 px-4 rounded' value={lang} onClick={handleOnclick}>
+      {!referredBy ? <button className='bg-gradient-to-r from-yellow-300 to-yellow-500 text-black font-semibold py-2 px-4 rounded' value={lang} onClick={handleOnclick}>
         {lang === 'en' ? 'हिंदी' : 'English'}
       </button> : <p>{lang === 'en' ? 'Adding more members from your village/block will help us create a network which can then be aided financially through Jan Suraj schemes' : 'आपके गांव/ब्लॉक से अधिक सदस्यों को जोड़ने से हमें एक नेटवर्क बनाने में मदद मिलेगी, जिससे जन सुराज योजनाओं के माध्यम से वित्तीय सहायता दी जा सकती है।'}</p>}
+      {!referredBy ? <div className="flex flex-col items-center justify-center"> {lang == 'en' ? <p className="text-lg md:text-2xl font-bold text-black">Registration Form</p> : <p className="text-lg md:text-2xl font-bold text-black">रजिस्ट्रेशन फॉर्म</p>}</div> : <div className="justify-center items-center">{lang == 'en' ? <p className="text-lg md:text-2xl font-bold text-black">Registration Form</p> : <p className="text-lg md:text-2xl font-bold text-black">रजिस्ट्रेशन फॉर्म</p>}</div>}
       {!referredBy ? <div className="bg-yellow border border-yellow-200 rounded-md p-3 mb-6">
         {lang == 'en' ? <h1 className="bg-yellow text-bold">
           <b>"Bihari"</b> as a term is used against all Non Resident Biharis in a manner of shame.
@@ -147,32 +149,10 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess, referred
         )}
       </div>
 
-      <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-          {lang == 'en' ? 'Email Address' : 'ई-मेल पता'}
-        </label>
-        <input
-          id="email"
-          type="email"
-          className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm ${errors.email ? 'border-red-500' : 'border'
-            }`}
-          {...register('email', {
-            // required: 'Email is required',
-            pattern: {
-              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-              message: 'Please enter a valid email address'
-            }
-
-          })}
-        />
-        {errors.email && (
-          <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
-        )}
-      </div>
       {!(referredBy) &&
         <div>
           <label htmlFor="state" className="block text-sm font-medium text-gray-700">
-            {lang == 'en' ? 'Currently residing in which State? *' : 'वर्तमान में किस राज्य में रह रहे हैं? *'}
+            {lang == 'en' ? 'Currently you are residing in which State? *' : 'वर्तमान में आप किस राज्य में रह रहे हैं? *'}
           </label>
           <select
             id="state"
@@ -223,7 +203,50 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess, referred
           <p className="mt-1 text-sm text-red-600">{errors.biharDistrict.message}</p>
         )}
       </div>
+      {/* <div>
+        <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+          {lang == 'en' ? 'Email Address' : 'ई-मेल पता'}
+        </label>
+        <input
+          id="email"
+          type="email"
+          className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm ${errors.email ? 'border-red-500' : 'border'
+            }`}
+          {...register('email', {
+            // required: 'Email is required',
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              message: 'Please enter a valid email address'
+            }
 
+          })}
+        />
+        {errors.email && (
+          <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
+        )}
+      </div> */}
+      <div>
+        <label htmlFor="pincode" className="block text-sm font-medium text-gray-700">
+          {lang == 'en' ? "Your Pin code in Bihar*" : 'बिहार में आपका पिन कोड *'}
+        </label>
+        <input
+          id="pincode"
+          type="pincode"
+          className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm ${errors.pincode ? 'border-red-500' : 'border'
+            }`}
+          {...register('pincode', {
+            required: lang == 'en' ? 'Pincode is required' : 'पिनकोड आवश्यक है',
+            pattern: {
+              value: /^8\d{5}$/,
+              message: lang == 'en' ? 'Please enter a valid pincode belonging to bihar' : 'कृपया आपका बिहार का वैध पिनकोड दर्ज करें'
+            }
+
+          })}
+        />
+        {errors.pincode && (
+          <p className="mt-1 text-sm text-red-600">{errors.pincode.message}</p>
+        )}
+      </div>
       <div>
         {lang == 'en' ?
           <button
@@ -255,6 +278,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess, referred
             )}
           </button>}
       </div>
+
     </form>
   );
 };

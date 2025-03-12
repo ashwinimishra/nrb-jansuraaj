@@ -14,6 +14,7 @@ export interface User {
   profileUrl: string;
   status?: 'pending' | 'active' | 'verified';
   points?: number;
+  pincode: number;
 }
 export interface ReferralFormData {
   fullName: string;

@@ -44,7 +44,7 @@ export const createUser = (
   profileUrl: string,
   createdAt: string,
   status: string, points: string,
-  countryCode: string, isRegistered: string, isMember: string, currentCountry: string, currentState: string,
+  countryCode: string, isRegistered: string, isMember: string, currentCountry: string, currentState: string, pincode: number
 ): User => {
   const users = getUsers();
 
@@ -66,7 +66,8 @@ export const createUser = (
     isRegistered,
     isMember,
     currentCountry,
-    currentState
+    currentState,
+    pincode
   };
 
   // Save the new user
