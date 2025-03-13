@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { User } from '../types';
 import { CheckCircle, Copy, Share2, User as UserIcon, Facebook } from 'lucide-react';
 import { toast } from 'react-toastify';
-import prashantImage from '../assets/Prashant.jpg';
+import prashantImage from '../assets/Prashant.jpeg';
 import ShareFBPost from './ShareFBPost';
 
 interface SuccessMessageProps {
