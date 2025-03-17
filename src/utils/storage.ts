@@ -142,7 +142,10 @@ export const updateReferralStatus = (userId: string, status: 'pending' | 'active
 
     // If status is verified, add extra points to the referrer
     if (status === 'verified' && users[userIndex].referredBy) {
-      addPointsToUser(users[userIndex].referredBy, 15);
+      const referredBy = users[userIndex].referredBy;
+      if (referredBy) {
+        addPointsToUser(referredBy, 15);
+      }
     }
 
     saveUsers(users);

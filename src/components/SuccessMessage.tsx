@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { User } from '../types';
 import { CheckCircle, Copy, Share2, User as UserIcon, Facebook } from 'lucide-react';
 import { toast } from 'react-toastify';
 import prashantImage from '../assets/Prashant.jpeg';
 import ShareFBPost from './ShareFBPost';
+import { analytics } from '../utils/analytics'
 
 interface SuccessMessageProps {
   user: User;
@@ -13,6 +14,10 @@ interface SuccessMessageProps {
 }
 
 const SuccessMessage: React.FC<SuccessMessageProps> = ({ user, onReferFriend, onViewDashboard, lang }) => {
+  useEffect(() => {
+    analytics.trackPageView('/success');
+  }, []);
+
   const copyProfileUrl = () => {
     navigator.clipboard.writeText(user.profileUrl);
     toast.success('Profile URL copied to clipboard!');
@@ -43,6 +48,22 @@ const SuccessMessage: React.FC<SuccessMessageProps> = ({ user, onReferFriend, on
       `width=${width},height=${height},resizable=yes,scrollbars=yes`
     );
   };
+
+  const handleReferClick = () => {
+    analytics.trackReferralClick();
+    onReferFriend();
+  };
+
+  const handleMembershipDownload = () => {
+    analytics.trackMembershipDownload();
+    window.open('https://www.jansuraaj.org/membership-registration');
+  };
+
+  const handleFacebookShare = () => {
+    analytics.trackSocialShare('facebook');
+    openResponsiveFBWindow();
+  };
+
   return (
     <div className="bg-green-50 border border-green-200 rounded-lg p-6 text-center">
       <div className="flex justify-center mb-4">
@@ -83,14 +104,14 @@ const SuccessMessage: React.FC<SuccessMessageProps> = ({ user, onReferFriend, on
 
       <div className="flex flex-col sm:flex-row justify-center gap-3">
         <button
-          onClick={onReferFriend}
+          onClick={handleReferClick}
           className="flex items-center justify-center py-2 px-6 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
         >
           <Share2 className="h-5 w-5 mr-2" />
-          {lang == 'en' ? 'Add 5 people' : 'जोड़िये गाँव के पांच साथी'}
+          {lang == 'en' ? 'Add 5 people' : 'जोड़िये गाँव के पांच साथी'}
         </button>
         <button
-          onClick={() => window.open('https://www.jansuraaj.org/membership-registration')}
+          onClick={handleMembershipDownload}
           className="flex items-center justify-center py-2 px-6 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
         >
           <UserIcon className="h-5 w-5 mr-2" />
@@ -104,11 +125,11 @@ const SuccessMessage: React.FC<SuccessMessageProps> = ({ user, onReferFriend, on
           View Dashboard
         </button> */}
         <button
-          onClick={openResponsiveFBWindow}
+          onClick={handleFacebookShare}
           className="flex items-center justify-center py-2 px-6 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
         >
           <Facebook className="h-5 w-5 mr-2" />
-          {lang == 'en' ? 'Post on Facebook and help us' : 'फेसबुक पर पोस्ट करें और हमारा हौसला बढ़ाएं'}
+          {lang == 'en' ? 'Post on Facebook and help us' : 'फेसबुक पर पोस्ट करें और हमारा हौसला बढ़ाएं'}
         </button>
       </div>
       {/* <ShareFBPost isOpen={isPopupOpen}

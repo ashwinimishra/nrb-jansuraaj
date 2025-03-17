@@ -37,7 +37,7 @@ const ReferralForm: React.FC<ReferralFormProps> = ({ userId, lang }) => {
                 {referrals.map((referral, index) => (
                   <li key={referral.id} className="py-3">
                     <p className="text-sm font-medium text-gray-800">{referral.fullName}</p>
-                    <p className="text-sm text-gray-500">{referral.email}</p>
+                    {/* <p className="text-sm text-gray-500">{referral.email}</p> */}
                     <p className="text-sm text-gray-500">{referral.phoneNumber}</p>
                   </li>
                 ))}

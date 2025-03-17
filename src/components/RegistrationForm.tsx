@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { User } from '../types';
@@ -7,6 +7,7 @@ import { createUser, getUserByEmail } from '../utils/storage';
 import { Loader2 } from 'lucide-react';
 import { encryptMobileNumber } from '../utils/encryption';
 import { indiaStatesEn, indiaStatesHi } from '../data/states';
+import { analytics } from '../utils/analytics';
 
 interface RegistrationFormProps {
   onSuccess: (user: User) => void;
@@ -43,8 +44,13 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess, referred
     // But the 1st is more robust when the event happens more frequently.
     changeLanguage(lang);
   };
+  useEffect(() => {
+    analytics.trackPageView('/registration');
+  }, []);
+
   const onSubmit = async (data: FormData) => {
     try {
+      analytics.trackFormStart();
       setIsSubmitting(true);
 
       //if email is not provided set this to default
@@ -76,12 +82,14 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess, referred
       reset();
 
       // Notify parent component of success
+      analytics.trackFormSubmit(true);
       onSuccess(newUser);
       changeLanguage(lang);
       if (!referredBy) {
         // toast.success('Registration successful!');
       }
     } catch (error) {
+      analytics.trackFormSubmit(false, error instanceof Error ? error.message : 'Unknown error occurred');
       console.error('Registration error:', error);
       toast.error('Registration failed. Please try again.');
     } finally {
@@ -93,7 +101,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess, referred
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 bg-white p-6 rounded-lg shadow-md">
       {!referredBy ? <button className='bg-gradient-to-r from-yellow-300 to-yellow-500 text-black font-semibold py-2 px-4 rounded' value={lang} onClick={handleOnclick}>
         {lang === 'en' ? 'हिंदी' : 'English'}
-      </button> : <p>{lang === 'en' ? 'Adding more members from your village/block will help us create a network which can then be aided financially through Jan Suraj schemes' : 'आपके गांव/ब्लॉक से अधिक सदस्यों को जोड़ने से हमें एक नेटवर्क बनाने में मदद मिलेगी, जिससे जन सुराज योजनाओं के माध्यम से वित्तीय सहायता दी जा सकती है।'}</p>}
+      </button> : <p>{lang === 'en' ? 'By adding more and more members from your village/block, we will be successful in spreading the ideas of Jan Suraj and efforts to remove the plight of Bihar to rural and remote areas.' : 'आपके गांव/ब्लॉक से अधिक से अधिक सदस्यों को जोड़ने से हमें जन सुराज के विचारों और बिहार की बदहाली दूर करने के प्रयासों को ग्रामीण और दूर दराज़ के क्षेत्रों तक पहुंचाने में सफलता मिलेगी ।'}</p>}
       {!referredBy ? <div className="flex flex-col items-center justify-center"> {lang == 'en' ? <p className="text-lg md:text-2xl font-bold text-black">Registration Form</p> : <p className="text-lg md:text-2xl font-bold text-black">रजिस्ट्रेशन फॉर्म</p>}</div> : <p></p>}
       {!referredBy ? <div className="bg-yellow border border-yellow-200 rounded-md p-3 mb-6">
         {lang == 'en' ? <h1 className="bg-yellow text-bold">
@@ -159,6 +167,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess, referred
             className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm ${errors.currentState ? 'border-red-500' : 'border'
               }`}
             {...register('currentState', lang == 'en' ? { required: 'Please select a state' } : { required: 'कृपया एक राज्य चुनें' })}
+            defaultValue='Bihar'
           >
             <option value="">{lang == 'en' ? 'Select State' : 'राज्य चुनें'}</option>
             {lang == 'en' ? indiaStatesEn.map((state) => (
@@ -176,33 +185,35 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess, referred
             <p className="mt-1 text-sm text-red-600">{errors.currentState.message}</p>
           )}
         </div>}
-      <div>
-        <label htmlFor="district" className="block text-sm font-medium text-gray-700">
-          {lang == 'en' ? 'Which District in Bihar you belong to? *' : 'आप बिहार के किस जिले से हैं? *'}
-        </label>
-        <select
-          id="district"
-          className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm ${errors.biharDistrict ? 'border-red-500' : 'border'
-            }`}
-          {...register('biharDistrict', lang == 'en' ? { required: 'Please select a district' } : { required: 'कृपया एक ज़िला चुनें' })}
-        >
-          <option value="">{lang == 'en' ? 'Select District' : 'ज़िला चुनें'}</option>
-          {lang == 'en' ? biharDistrictsEn.map((district) => (
-            <option key={district} value={district}>
-              {district}
-            </option>
-          )) :
-            biharDistrictsHi.map((district) => (
+      {!(referredBy) &&
+        <div>
+          <label htmlFor="district" className="block text-sm font-medium text-gray-700">
+            {lang == 'en' ? 'Which District in Bihar you belong to? *' : 'आप बिहार के किस जिले से हैं? *'}
+          </label>
+          <select
+            id="district"
+            className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm ${errors.biharDistrict ? 'border-red-500' : 'border'
+              }`}
+            {...register('biharDistrict', lang == 'en' ? { required: 'Please select a district' } : { required: 'कृपया एक ज़िला चुनें' })}
+          >
+            <option value="">{lang == 'en' ? 'Select District' : 'ज़िला चुनें'}</option>
+            {lang == 'en' ? biharDistrictsEn.map((district) => (
               <option key={district} value={district}>
                 {district}
               </option>
-            ))
-          }
-        </select>
-        {errors.biharDistrict && (
-          <p className="mt-1 text-sm text-red-600">{errors.biharDistrict.message}</p>
-        )}
-      </div>
+            )) :
+              biharDistrictsHi.map((district) => (
+                <option key={district} value={district}>
+                  {district}
+                </option>
+              ))
+            }
+          </select>
+          {errors.biharDistrict && (
+            <p className="mt-1 text-sm text-red-600">{errors.biharDistrict.message}</p>
+          )}
+        </div>
+      }
       {/* <div>
         <label htmlFor="email" className="block text-sm font-medium text-gray-700">
           {lang == 'en' ? 'Email Address' : 'ई-मेल पता'}
@@ -225,28 +236,30 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess, referred
           <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
         )}
       </div> */}
-      <div>
-        <label htmlFor="pincode" className="block text-sm font-medium text-gray-700">
-          {lang == 'en' ? "Your Pin code in Bihar*" : 'बिहार में आपका पिन कोड *'}
-        </label>
-        <input
-          id="pincode"
-          type="pincode"
-          className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm ${errors.pincode ? 'border-red-500' : 'border'
-            }`}
-          {...register('pincode', {
-            required: lang == 'en' ? 'Pincode is required' : 'पिनकोड आवश्यक है',
-            pattern: {
-              value: /^8\d{5}$/,
-              message: lang == 'en' ? 'Please enter a valid pincode belonging to bihar' : 'कृपया आपका बिहार का वैध पिनकोड दर्ज करें'
-            }
+      {!(referredBy) &&
+        <div>
+          <label htmlFor="pincode" className="block text-sm font-medium text-gray-700">
+            {lang == 'en' ? "Your Pin code in Bihar*" : 'बिहार में आपका पिन कोड *'}
+          </label>
+          <input
+            id="pincode"
+            type="pincode"
+            className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm ${errors.pincode ? 'border-red-500' : 'border'
+              }`}
+            {...register('pincode', {
+              required: lang == 'en' ? 'Pincode is required' : 'पिनकोड आवश्यक है',
+              pattern: {
+                value: /^8\d{5}$/,
+                message: lang == 'en' ? 'Please enter a valid pincode belonging to bihar' : 'कृपया आपका बिहार का वैध पिनकोड दर्ज करें'
+              }
 
-          })}
-        />
-        {errors.pincode && (
-          <p className="mt-1 text-sm text-red-600">{errors.pincode.message}</p>
-        )}
-      </div>
+            })}
+          />
+          {errors.pincode && (
+            <p className="mt-1 text-sm text-red-600">{errors.pincode.message}</p>
+          )}
+        </div>
+      }
       <div>
         {lang == 'en' ?
           <button
