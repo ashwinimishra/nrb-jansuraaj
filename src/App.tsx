@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { User } from './types';
@@ -8,8 +8,14 @@ import ReferralForm from './components/ReferralForm';
 import ProfileDashboard from './components/ProfileDashboard';
 import { Users } from 'lucide-react';
 import logoImage from './assets/logo.jpeg';
+import { analytics } from './utils/analytics';
 
 function App() {
+  // Track page view when component mounts
+  useEffect(() => {
+    analytics.trackPageView(window.location.pathname);
+  }, []);
+
   const [registeredUser, setRegisteredUser] = useState<User | null>(null);
   const [showReferralForm, setShowReferralForm] = useState(false);
   const [showDashboard, setShowDashboard] = useState(false);
